@@ -3,7 +3,7 @@ var santa = (function($) {
     bucket: "apexsanta-s3bucket-xyojbppcy9qj",
     region: "ap-southeast-2",
     local: true,
-    refreshSeconds: 1
+    refreshSeconds: 15
   };
 
   var events = [
@@ -65,14 +65,14 @@ var santa = (function($) {
                                             new google.maps.Size(22,22), new google.maps.Point(0,18), new google.maps.Point(11,11)),
           clickable: false,
           shadow: null,
-          zIndex: 999,
+          zIndex: 900,
           map: map
         });
       });
     }
   }
 
-  function setSantaLocation() {
+  function _setSantaLocation() {
     if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
         if (data.tracking) {
@@ -99,6 +99,40 @@ var santa = (function($) {
     }
   }
 
+  function _refreshSantaLocation() {
+    var liveBaseUrl = "";
+    if (config.local) {
+      var liveBaseUrl = "http://" + config.bucket + ".s3-website-ap-southeast-2.amazonaws.com";
+    }
+    console.log("Refresh Santa location" + data.currentEvent.id);
+    $.ajax({
+      url: liveBaseUrl + "/live/" + data.currentEvent.id + ".json",
+      type: "GET",
+      success: function(result) {
+        console.log("Refreshed Santa location " + data.currentEvent.id + ": " + JSON.stringify(result));
+        var loc = JSON.parse(result);
+        var image = {
+          url: "/assets/santa.png",
+          size: new google.maps.Size(40, 40),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(20, 20)
+        };
+
+        var santaLoc = new google.maps.Marker({
+          position: loc,
+          clickable: false,
+          icon: image,
+          shadow: null,
+          zIndex: 910,
+          map: data.map
+        });
+      },
+      error: function(jqXHR, textStatus, err) {
+        console.log("Refresh Santa error: " + err);
+      }
+    });
+  }
+
   var initMap = function() {
     if (config.local) {
       var kmlBaseUrl = "http://" + config.bucket + ".s3-website-ap-southeast-2.amazonaws.com";
@@ -109,6 +143,7 @@ var santa = (function($) {
 
     var kmlUrl = kmlBaseUrl + "/data/" + data.currentEvent.kml;
     var map = map = new google.maps.Map(document.getElementById('map'));
+    data.map = map;
     var kmlLayer = new google.maps.KmlLayer(kmlUrl, {
       map: map,
       preserveViewport: false,
@@ -116,6 +151,10 @@ var santa = (function($) {
     });
 
     _refreshCurrentLocation(map);
+    (function updateSanta(){
+      _refreshSantaLocation();
+      setTimeout(updateSanta, config.refreshSeconds * 1000);
+    })();
   };
 
   var setCurrentEvent = function(index) {
@@ -132,7 +171,7 @@ var santa = (function($) {
       data.tracking = true;
       (function updateTracking(){
         if (data.tracking) {
-          setSantaLocation();
+          _setSantaLocation();
           setTimeout(updateTracking, config.refreshSeconds * 1000);
         }
       })();
