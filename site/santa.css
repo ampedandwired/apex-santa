@@ -3,6 +3,45 @@ html, body {
   width: 100%;
 }
 
+body {
+  font-family: 'Merienda One', cursive;
+  background-color: #990000;
+  color: #FFF;
+
+}
+
+h1 {
+  text-align: center;
+  font-size: 4.0em;
+}
+
 #map {
   height: 60%;
+  width: 80%;
+  margin: 0 auto 0 auto;
+  border: 5px solid #CC0000;
+  border-style: groove;
+}
+
+#events {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  font-size: 1.6em;
+}
+
+[v-cloak] {
+  display: none;
+}
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
+  background-color: #007000;
+}
+
+.nav-pills > li > a {
+  color: #FFF;
+}
+
+.nav-pills > li:hover > a, .nav-pills > li:focus > a {
+  background-color: #AA0000;
+  color: #FFF;
 }

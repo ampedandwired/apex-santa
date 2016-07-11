@@ -20,6 +20,13 @@ var santa = (function($) {
       title: "Berowra",
       start_time: "2016-12-21 19:00:00",
       description: "Starts at Coles and finishes at Berowra Oval"
+    },
+    {
+      id: "blacktown-2016",
+      kml: "berowra2-2016.kml",
+      title: "Blacktown",
+      start_time: "2016-12-22 19:00:00",
+      description: "Cruise the streets of Blacktown"
     }
   ];
 
