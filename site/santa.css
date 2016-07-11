@@ -10,6 +10,14 @@ body {
 
 }
 
+a {
+  color: #66ccff;
+}
+
+a:hover, a:focus {
+  color: #4dc3ff;
+}
+
 .container-fluid {
   width: 100%;
   height: 100%;
@@ -32,6 +40,11 @@ body {
   font-size: 1.5em;
   font-family: "Trebuchet MS", Helvetica, sans-serif;
   font-weight: bold;
+}
+
+footer {
+  text-align: center;
+  margin-top: 3em;
 }
 
 .nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
