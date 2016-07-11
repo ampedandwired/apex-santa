@@ -5,6 +5,16 @@
       "Type" : "AWS::S3::Bucket",
       "Properties" : {
         "AccessControl" : "PublicRead",
+        "CorsConfiguration": {
+          "CorsRules": [
+            {
+              "Id": "S3Cors",
+              "AllowedOrigins": ["*"],
+              "AllowedMethods": ["PUT", "GET"],
+              "AllowedHeaders": ["*"]
+            }
+          ]
+        },
         "WebsiteConfiguration" : {
           "IndexDocument" : "index.html",
           "ErrorDocument" : "error.html"
@@ -23,7 +33,7 @@
             "Statement": [{
               "Sid": "Stmt1468199322164",
               "Action": [
-                "s3:PutObject"
+                "s3:PutObject", "s3:PutObjectAcl"
               ],
               "Effect": "Allow",
               "Resource": {"Fn::Join": ["", ["arn:aws:s3:::", {"Ref": "S3Bucket"}, "/live/*"]] }
