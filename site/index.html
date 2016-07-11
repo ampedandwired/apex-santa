@@ -8,6 +8,7 @@
     <link rel="icon" type="image/png" href="/assets/santa_favicon.png">
     <!--[if lt IE 8]><link rel="shortcut icon" href="/assets/santa_favicon.ico"/><![endif]-->
     <link href="https://fonts.googleapis.com/css?family=Merienda+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Merienda" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="/santa.css">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -17,33 +18,39 @@
     <![endif]-->
   </head>
   <body>
-    <div id="santa" class="container">
-      <div id="page-header">
+    <div id="santa" class="container-fluid">
+      <div id="page-header" class="row">
         <h1>Santa Claus is Coming to Town!</h1>
       </div>
-      <div id="content" v-cloak>
-        <ul id="events" class="nav nav-pills nav-justified">
-          <li v-for="event in events" role="presentation" v-bind:class="{'active': currentEvent.id == event.id}" v-on:click="setCurrentEvent($index)">
-            <a href="#">{{ event.title }}</a>
-          </li>
-        </ul>
-        <h2>{{ currentEvent.title }}</h2>
-        <p class="lead">{{ currentEvent.description }}</p>
-        <template v-if="credentials">
-            <button type="button" class="btn btn-lg btn-success" v-bind:class="{'disabled': tracking}" v-on:click="startTracking()">
-              <span class="glyphicon glyphicon-play"></span> Start
-            </button>
-            <button type="button" class="btn btn-lg btn-warning" v-bind:class="{'disabled': !tracking}" v-on:click="stopTracking()">
-              <span class="glyphicon glyphicon-stop"></span> Stop
-            </button>
-            <div v-if="error" class="alert alert-danger alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              {{ error }}
-            </div>
-        </template>
+      <div id="content" class="container" v-cloak>
+        <div id="events" class="row">
+          <ul class="nav nav-pills nav-justified">
+            <li v-for="event in events" role="presentation" v-bind:class="{'active': currentEvent.id == event.id}" v-on:click="setCurrentEvent($index)">
+              <a href="#">{{ event.title }}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="row">
+          <div id="event-details">
+            <h2>{{ currentEvent.title }} - {{ currentEvent.start_time }}</h2>
+            <p class="lead">{{ currentEvent.description }}</p>
+            <template v-if="credentials">
+              <button type="button" class="btn btn-lg btn-success" v-bind:class="{'disabled': tracking}" v-on:click="startTracking()">
+                <span class="glyphicon glyphicon-play"></span> Start
+              </button>
+              <button type="button" class="btn btn-lg btn-warning" v-bind:class="{'disabled': !tracking}" v-on:click="stopTracking()">
+                <span class="glyphicon glyphicon-stop"></span> Stop
+              </button>
+              <div v-if="error" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ error }}
+              </div>
+            </template>
+          </div>
+        </div>
       </div>
+      <div id="map"></div>
     </div>
-    <div id="map"></div>
 
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>

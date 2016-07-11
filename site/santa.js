@@ -12,14 +12,14 @@ var santa = (function($) {
       kml: "berowra-heights2-2016.kml",
       title: "Berowra Heights",
       start_time: "2016-12-20 19:00:00",
-      description: "Starts at Coles and finishes at Warrina Oval"
+      description: "Starts at Coles and finishes at Warrina Oval. Come and join us afterwards at Warrina Oval for a BBQ."
     },
     {
       id: "berowra-2016",
       kml: "berowra2-2016.kml",
       title: "Berowra",
       start_time: "2016-12-21 19:00:00",
-      description: "Starts at Coles and finishes at Berowra Oval"
+      description: "Starts at Coles and finishes at Berowra Oval. There will be a BBQ, jumping castle and Santa photos at the oval afterwards."
     },
     {
       id: "blacktown-2016",

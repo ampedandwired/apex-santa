@@ -10,9 +10,40 @@ body {
 
 }
 
+.container-fluid {
+  width: 100%;
+  height: 100%;
+}
+
+#page-header {
+  background-color: #660000;
+  padding-bottom: 1em;
+}
+
 h1 {
   text-align: center;
-  font-size: 4.0em;
+  font-size: 3.5em;
+}
+
+#events {
+  font-size: 1.2em;
+}
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
+  background-color: #006000;
+}
+
+.nav-pills > li > a {
+  color: #FFF;
+}
+
+.nav-pills > li:hover > a, .nav-pills > li:focus > a {
+  background-color: #AA0000;
+  color: #FFF;
+}
+
+#event-details {
+  font-family: 'Merienda', cursive;
 }
 
 #map {
@@ -23,25 +54,6 @@ h1 {
   border-style: groove;
 }
 
-#events {
-  margin-top: 1em;
-  margin-bottom: 1em;
-  font-size: 1.6em;
-}
-
 [v-cloak] {
   display: none;
-}
-
-.nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
-  background-color: #007000;
-}
-
-.nav-pills > li > a {
-  color: #FFF;
-}
-
-.nav-pills > li:hover > a, .nav-pills > li:focus > a {
-  background-color: #AA0000;
-  color: #FFF;
 }
