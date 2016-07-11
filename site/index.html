@@ -36,7 +36,7 @@
         </div>
         <div class="row">
           <div id="event-details">
-            <h2>{{ currentEvent.title }} - {{ currentEvent.start_time }}</h2>
+            <h2>{{ currentEvent.title }} - {{ currentEvent.start_time_nice }}</h2>
             <p class="lead">{{ currentEvent.description }}</p>
             <template v-if="credentials">
               <button type="button" class="btn btn-lg btn-success" v-bind:class="{'disabled': tracking}" v-on:click="startTracking()">
