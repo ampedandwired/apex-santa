@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns='http://www.opengis.net/kml/2.2'>
+	<Document>
+		<name>Apex Santa</name>
+		<description><![CDATA[Date: 24/12/2016<br>Time: 7pm]]></description>
+		<Folder>
+			<name>Santa 2016</name>
+			<Placemark>
+				<name>Santa Route 1</name>
+				<description><![CDATA[Santa route 1 description]]></description>
+				<styleUrl>#line-DB4436-6</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>151.1398065,-33.6134042,0.0 151.1387229,-33.6144138,0.0 151.1367059,-33.6164241,0.0 151.1368668,-33.6173622,0.0 151.1378646,-33.6178983,0.0 151.1383688,-33.6179519,0.0 151.139034,-33.6167815,0.0 151.1390233,-33.616433,0.0 151.139195,-33.6161739,0.0 151.1411262,-33.6155485,0.0 151.1416948,-33.6152179,0.0</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>Start</name>
+				<styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+				<Point>
+					<coordinates>151.1398172,-33.6133952,0.0</coordinates>
+				</Point>
+			</Placemark>
+		</Folder>
+		<Style id='icon-503-DB4436-nodesc-normal'>
+			<IconStyle>
+				<color>ff3644DB</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<Style id='icon-503-DB4436-nodesc-highlight'>
+			<IconStyle>
+				<color>ff3644DB</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<StyleMap id='icon-503-DB4436-nodesc'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-503-DB4436-nodesc-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-503-DB4436-nodesc-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id='line-DB4436-6-normal'>
+			<LineStyle>
+				<color>ff3644DB</color>
+				<width>6</width>
+			</LineStyle>
+		</Style>
+		<Style id='line-DB4436-6-highlight'>
+			<LineStyle>
+				<color>ff3644DB</color>
+				<width>9.0</width>
+			</LineStyle>
+		</Style>
+		<StyleMap id='line-DB4436-6'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#line-DB4436-6-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#line-DB4436-6-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+	</Document>
+</kml>

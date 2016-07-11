@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Santa Tracker</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <link rel="stylesheet" href="/santa.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div id="santa" class="container">
+      <!-- <h1>Santa Claus is Coming to Town!</h1> -->
+      <p>{{ msg }}</p>
+      <ul class="nav nav-pills nav-justified">
+        <li v-for="event in events" role="presentation" v-bind:class="{'active': currentEvent.id == event.id}" v-on:click="setCurrentEvent($index)">
+          <a href="#">{{ event.title }}</a>
+        </li>
+      </ul>
+      <h2>{{ currentEvent.title }}</h2>
+      <p class="lead">{{ currentEvent.description }}</p>
+    </div>
+    <div id="map"></div>
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js" crossorigin="anonymous"></script>
+    <script src="/santa.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqDDdkhUpl0_6Zfri25lPEvY5CP4_cOrQ&callback=santa.initMap"></script>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Resources" : {
+    "S3Bucket" : {
+      "Type" : "AWS::S3::Bucket",
+      "Properties" : {
+        "AccessControl" : "PublicRead",
+        "WebsiteConfiguration" : {
+          "IndexDocument" : "index.html",
+          "ErrorDocument" : "error.html"
+        }
+      }
+    },
+
+    "S3User" : {
+      "Type" : "AWS::IAM::User",
+      "Properties" : {
+        "Path" : "/",
+        "Policies" : [{
+          "PolicyName" : "s3upload",
+          "PolicyDocument" : {
+            "Version": "2012-10-17",
+            "Statement": [{
+              "Sid": "Stmt1468199322164",
+              "Action": [
+                "s3:PutObject"
+              ],
+              "Effect": "Allow",
+              "Resource": {"Fn::Join": ["", ["arn:aws:s3:::", {"Ref": "S3Bucket"}, "/live/*"]] }
+            }]
+          }
+        }]
+      }
+    },
+
+    "S3AccessKey": {
+      "Type": "AWS::IAM::AccessKey",
+      "Properties": {
+        "UserName": {"Ref": "S3User"}
+      }
+    }
+  },
+
+  "Outputs" : {
+    "S3BucketUri" : {
+      "Value" : { "Fn::Join" : [ "", [  "s3://", {"Ref": "S3Bucket"} ] ] },
+      "Description" : "This is the S3 bucket name"
+    },
+    "WebsiteURLTracker" : {
+      "Value" : { "Fn::Join": ["", [{"Fn::GetAtt" : [ "S3Bucket", "WebsiteURL" ]}, "?id=", {"Ref": "S3AccessKey"}, "&secret=", {"Fn::GetAtt": ["S3AccessKey", "SecretAccessKey"]} ]] },
+      "Description" : "This is the Santa's secret URL (don't share this publically)"
+    },
+    "WebsiteURL" : {
+      "Value" : { "Fn::GetAtt" : [ "S3Bucket", "WebsiteURL" ] },
+      "Description" : "This is the public URL of the website"
+    }
+  }
+}

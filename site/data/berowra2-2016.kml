@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns='http://www.opengis.net/kml/2.2'>
+	<Document>
+		<name>Berowra Santa 2016</name>
+		<description><![CDATA[]]></description>
+		<Folder>
+			<name>Untitled layer</name>
+			<Placemark>
+				<name>Line 1</name>
+				<styleUrl>#line-DB4436-7-nodesc</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>151.1398172,-33.6134042,0.0 151.142242,-33.6157808,0.0 151.1452675,-33.6139402,0.0 151.1454391,-33.6140653,0.0 151.1471128,-33.6195154,0.0 151.1475849,-33.6196226,0.0 151.1477566,-33.6197656,0.0 151.1478639,-33.6199085,0.0 151.1478853,-33.6201408,0.0 151.1473489,-33.6231605,0.0 151.1481428,-33.6233928,0.0 151.1484003,-33.6223922,0.0 151.1492157,-33.6226602,0.0</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>Start</name>
+				<styleUrl>#icon-1257-nodesc</styleUrl>
+				<Point>
+					<coordinates>151.1398172,-33.6134042,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Finish</name>
+				<styleUrl>#icon-1385-nodesc</styleUrl>
+				<Point>
+					<coordinates>151.1493659,-33.6226245,0.0</coordinates>
+				</Point>
+			</Placemark>
+		</Folder>
+		<Style id='icon-1257-nodesc-normal'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/1257-poi-government.png</href>
+				</Icon>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<Style id='icon-1257-nodesc-highlight'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/1257-poi-government.png</href>
+				</Icon>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<StyleMap id='icon-1257-nodesc'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-1257-nodesc-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-1257-nodesc-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id='icon-1385-nodesc-normal'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/1385-rec-racetrack.png</href>
+				</Icon>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<Style id='icon-1385-nodesc-highlight'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/1385-rec-racetrack.png</href>
+				</Icon>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<StyleMap id='icon-1385-nodesc'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-1385-nodesc-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-1385-nodesc-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id='line-DB4436-7-nodesc-normal'>
+			<LineStyle>
+				<color>ff3644DB</color>
+				<width>7</width>
+			</LineStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<Style id='line-DB4436-7-nodesc-highlight'>
+			<LineStyle>
+				<color>ff3644DB</color>
+				<width>11.0</width>
+			</LineStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<StyleMap id='line-DB4436-7-nodesc'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#line-DB4436-7-nodesc-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#line-DB4436-7-nodesc-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+	</Document>
+</kml>
