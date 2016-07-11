@@ -15,18 +15,23 @@ body {
   height: 100%;
 }
 
-#page-header {
+#header {
   background-color: #660000;
-  padding-bottom: 1em;
 }
 
-h1 {
-  text-align: center;
+#header img {
+  margin-left: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+#header h1 {
   font-size: 3.5em;
 }
 
 #events {
-  font-size: 1.2em;
+  font-size: 1.5em;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-weight: bold;
 }
 
 .nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
