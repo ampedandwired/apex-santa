@@ -29,11 +29,19 @@ a:hover, a:focus {
 
 #header img {
   margin-left: 0.5em;
+  margin-right: 0.5em;
   margin-bottom: 0.5em;
 }
 
 #header h1 {
   font-size: 3em;
+}
+
+#lead {
+  text-align: center;
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
+  font-family: 'Merienda', cursive;
 }
 
 #events {
@@ -42,9 +50,8 @@ a:hover, a:focus {
   font-weight: bold;
 }
 
-footer {
-  text-align: center;
-  margin-top: 3em;
+#events li {
+  border: 1px solid #A00;
 }
 
 .nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
@@ -62,16 +69,24 @@ footer {
 
 #event-details {
   font-family: 'Merienda', cursive;
-  margin-top: 3em;
+  margin-top: 2em;
+  margin-bottom: 2em;
 }
 
 #map {
   height: 50%;
-  width: 80%;
+  width: 65%;
   margin: 0 auto 0 auto;
   border: 5px solid #CC0000;
   border-style: groove;
   position: relative;
+}
+
+footer {
+  text-align: center;
+  margin-top: 1em;
+  padding-top: 2em;
+  padding-bottom: 2em;
 }
 
 [v-cloak] {
