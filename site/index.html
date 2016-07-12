@@ -4,13 +4,14 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="no-referrer" />
     <title>Santa Tracker</title>
-    <link rel="icon" type="image/png" href="/assets/santa_favicon.png">
-    <!--[if lt IE 8]><link rel="shortcut icon" href="/assets/santa_favicon.ico"/><![endif]-->
+    <link rel="icon" type="image/png" href="assets/santa_favicon.png">
+    <!--[if lt IE 8]><link rel="shortcut icon" href="assets/santa_favicon.ico"/><![endif]-->
     <link href="https://fonts.googleapis.com/css?family=Merienda+One" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Merienda" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link rel="stylesheet" href="/santa.css">
+    <link rel="stylesheet" href="santa.css">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -22,7 +23,7 @@
       <div id="header" class="row">
         <h1 class="text-center">
           Santa Claus is Coming to Town!
-          <a href="http://berowraapex.org.au"><img src="/assets/apex_logo.png" width="64px" height="64px" title="Brought to you by Berowra Apex Club" alt="logo" /></a>
+          <a href="http://berowraapex.org.au"><img src="assets/apex_logo.png" width="64px" height="64px" title="Brought to you by Berowra Apex Club" alt="logo" /></a>
         </h1>
 
       </div>
@@ -37,12 +38,13 @@
         <div class="row">
           <div id="event-details">
             <h2>{{ currentEvent.title }} - {{ currentEvent.start_time_nice }}</h2>
-            <p class="lead">{{ currentEvent.description }}</p>
+            <p>{{ currentEvent.description }}</p>
+            <p><strong>{{ status }}</strong></p>
             <template v-if="credentials">
-              <button type="button" class="btn btn-lg btn-success" v-bind:class="{'disabled': tracking}" v-on:click="startTracking()">
+              <button type="button" class="btn btn-lg btn-success" v-bind:class="{'disabled': tracking}" v-on:click.prevent="startTracking">
                 <span class="glyphicon glyphicon-play"></span> Start
               </button>
-              <button type="button" class="btn btn-lg btn-warning" v-bind:class="{'disabled': !tracking}" v-on:click="stopTracking()">
+              <button type="button" class="btn btn-lg btn-warning" v-bind:class="{'disabled': !tracking}" v-on:click="stopTracking">
                 <span class="glyphicon glyphicon-stop"></span> Stop
               </button>
               <div v-if="error" class="alert alert-danger alert-dismissible" role="alert">
@@ -63,7 +65,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js" crossorigin="anonymous"></script>
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.4.6.min.js"></script>
-    <script src="/santa.js"></script>
+    <script src="santa.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbcrgUkf35Tw6h06HwGpVUQCabNbLZr1c&callback=santa.initMap"></script>
   </body>
 </html>

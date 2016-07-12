@@ -6,12 +6,14 @@ var santa = (function($) {
     refreshSeconds: 15
   };
 
+  config.baseUrl = "https://s3-" + config.region + ".amazonaws.com/" + config.bucket;
+
   var events = [
     {
       id: "berowra-heights-2016",
       kml: "berowra-heights2-2016.kml",
       title: "Berowra Heights",
-      start_time: "2016-12-16 19:00:00",
+      start_time: "2016-12-16 7:00:00+10",
       start_time_nice: "Friday 16th December, 7pm",
       description: "Starts at Coles and finishes at Warrina Oval. Come and join us afterwards at Warrina Oval for a BBQ."
     },
@@ -19,7 +21,7 @@ var santa = (function($) {
       id: "berowra-2016",
       kml: "berowra2-2016.kml",
       title: "Berowra",
-      start_time: "2016-12-17 18:00:00",
+      start_time: "2016-12-17 18:00:00+11",
       start_time_nice: "Saturday 17th December, 6pm",
       description: "Starts at Coles and finishes at Berowra Oval. There will be a BBQ, jumping castle and Santa photos at the oval afterwards."
     },
@@ -27,11 +29,18 @@ var santa = (function($) {
       id: "blacktown-2016",
       kml: "berowra2-2016.kml",
       title: "Blacktown",
-      start_time: "2016-12-18 14:00:00",
+      start_time: "2016-12-18 14:00:00+11",
       start_time_nice: "Sunday 18th December, 2pm",
       description: "Cruise the streets of Blacktown"
     }
   ];
+
+  var currentTime = new Date().getTime();
+  events = events.filter(function(e) {
+    return Date.parse(e.start_time) >= currentTime - (24*60*60*1000);
+  }).sort(function(a, b) {
+    return a.start_time - b.start_time;
+  });
 
   function _getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -63,6 +72,7 @@ var santa = (function($) {
     currentEvent: events[0],
     credentials: _getCredentials(),
     tracking: false,
+    status: null,
     error: null
   };
 
@@ -103,24 +113,78 @@ var santa = (function($) {
             }
           });
         }
+      }, function(err) {
+        data.error = err.message;
       });
     } else {
+      console.log("5");
       data.error = "Unable to determine your current location";
     }
   }
 
-  function _refreshSantaLocation() {
-    var liveBaseUrl = "";
-    if (config.local) {
-      var liveBaseUrl = "http://" + config.bucket + ".s3-website-ap-southeast-2.amazonaws.com";
+  function timeTill(date) {
+    var seconds = Math.floor((date - new Date()) / 1000);
+    var interval = Math.floor(seconds / 31536000);
+
+    if (interval > 1) {
+        return interval + " years";
     }
+    interval = Math.floor(seconds / 2592000);
+    if (interval > 1) {
+        return interval + " months";
+    }
+    interval = Math.floor(seconds / 86400);
+    if (interval > 1) {
+        return interval + " days";
+    }
+    interval = Math.floor(seconds / 3600);
+    if (interval > 1) {
+        return interval + " hours";
+    }
+    interval = Math.floor(seconds / 60);
+    if (interval > 1) {
+        return interval + " minutes";
+    }
+    return Math.floor(seconds) + " seconds";
+  }
+
+  function _santaStatus(eventTime, lastSantaUpdateTime) {
+    var currentTime = new Date().getTime();
+    console.log(eventTime, currentTime, lastSantaUpdateTime);
+    var santaSeenRecently = lastSantaUpdateTime && (currentTime - lastSantaUpdateTime) < 15*60*1000;
+    var santaSeenSinceEventStarted = lastSantaUpdateTime && lastSantaUpdateTime >= eventTime;
+    var eventStarted = currentTime >= eventTime;
+    var eventNearlyStarted = currentTime >= (eventTime - 15*60*1000);
+    console.log("santaSeenRecently " + santaSeenRecently, "santaSeenSinceEventStarted " + santaSeenSinceEventStarted, "eventStarted " + eventStarted, "eventNearlyStarted "+eventNearlyStarted);
+    var status = null;
+
+    if (eventStarted && !santaSeenSinceEventStarted) {
+      status = "Santa is harnessing up his reindeer and will be here soon!";
+    } else if (eventStarted && santaSeenSinceEventStarted && !santaSeenRecently) {
+      status = "Santa is on his way back to the North Pole. See you next year!";
+    } else if (eventNearlyStarted && santaSeenRecently) {
+      status = "Santa is in town! You can find him on the map below.";
+    } else {
+      if (!eventStarted) {
+        status = "Santa will visit in " + timeTill(Date.parse(data.currentEvent.start_time));
+      } else {
+        status = "Santa is back in the North Pole. See you next year!"
+      }
+    }
+
+    return status;
+  }
+
+  function _refreshSantaLocation() {
     console.log("Refresh Santa location" + data.currentEvent.id);
     $.ajax({
-      url: liveBaseUrl + "/live/" + data.currentEvent.id + ".json",
+      url: config.baseUrl + "/live/" + data.currentEvent.id + ".json",
       type: "GET",
       success: function(result) {
         console.log("Refreshed Santa location " + data.currentEvent.id + ": " + JSON.stringify(result));
         var loc = JSON.parse(result);
+        var locTime = loc.time;
+        data.status = _santaStatus(Date.parse(data.currentEvent.start_time), locTime);
         var image = {
           url: "/assets/santa.png",
           size: new google.maps.Size(40, 40),
@@ -138,20 +202,13 @@ var santa = (function($) {
         });
       },
       error: function(jqXHR, textStatus, err) {
-        console.log("Refresh Santa error: " + err);
+        data.status = _santaStatus(Date.parse(data.currentEvent.start_time), null);
       }
     });
   }
 
   var initMap = function() {
-    if (config.local) {
-      var kmlBaseUrl = "http://" + config.bucket + ".s3-website-ap-southeast-2.amazonaws.com";
-    } else {
-      var currentUrl = window.location;
-      var kmlBaseUrl = currentUrl.protocol + "//" + currentUrl.host
-    }
-
-    var kmlUrl = kmlBaseUrl + "/data/" + data.currentEvent.kml;
+    var kmlUrl = config.baseUrl + "/data/" + data.currentEvent.kml;
     var map = map = new google.maps.Map(document.getElementById('map'));
     data.map = map;
     var kmlLayer = new google.maps.KmlLayer(kmlUrl, {

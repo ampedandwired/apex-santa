@@ -62,14 +62,16 @@ footer {
 
 #event-details {
   font-family: 'Merienda', cursive;
+  margin-top: 3em;
 }
 
 #map {
-  height: 60%;
+  height: 50%;
   width: 80%;
   margin: 0 auto 0 auto;
   border: 5px solid #CC0000;
   border-style: groove;
+  position: relative;
 }
 
 [v-cloak] {
