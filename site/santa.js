@@ -13,7 +13,7 @@ var santa = (function($) {
       id: "berowra-heights-2016",
       kml: "berowra-heights2-2016.kml",
       title: "Berowra Heights",
-      start_time: "2016-12-16 7:00:00+10",
+      start_time: "2016-12-16 19:00:00+11",
       start_time_nice: "Friday 16th December, 7pm",
       description: "Starts at Coles and finishes at Warrina Oval. Come and join us afterwards at Warrina Oval for a BBQ."
     },
@@ -166,7 +166,7 @@ var santa = (function($) {
       status = "Santa is in town! You can find him on the map below.";
     } else {
       if (!eventStarted) {
-        status = "Santa will visit in " + timeTill(Date.parse(data.currentEvent.start_time));
+        status = "Only " + timeTill(Date.parse(data.currentEvent.start_time)) + " to go until Santa's visit!";
       } else {
         status = "Santa is back in the North Pole. See you next year!"
       }
