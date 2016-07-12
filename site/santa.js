@@ -249,6 +249,13 @@ var santa = (function($) {
     data.tracking = false;
   };
 
+  // Fixes google maps height when it's inside a div
+  $(window).resize(function () {
+    var h = $(window).height();
+    var offsetTop = 250;
+    $('#map').css('height', (h - offsetTop));
+  }).resize();
+
   var vue = new Vue({
     el: '#santa',
     data: data,

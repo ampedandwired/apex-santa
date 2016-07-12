@@ -21,18 +21,15 @@
   <body>
     <div id="santa" class="container-fluid">
       <div id="header" class="row">
-        <h1 class="text-center">
-          <img src="assets/santa_small.png" width="64px" height="64px" alt="logo" />
-          Santa Claus is Coming to Town!
-        </h1>
+        <h1 class="text-center">Santa Claus is Coming to Town!</h1>
       </div>
       <div id="content" class="container" v-cloak>
         <div id="lead">
-          <p class="lead">Santa is making a special trip through the streets of Berowra and Blacktown this year. View his route and track him live right here.</p>
+          <p class="lead">Santa is making a special trip through the streets of Berowra and Blacktown this Christmas. View his route and track him live right here.</p>
         </div>
         <div id="events" class="row">
           <ul class="nav nav-pills nav-justified">
-            <li v-for="event in events" role="presentation" v-bind:class="{'active': currentEvent.id == event.id}" v-on:click="setCurrentEvent($index)">
+            <li v-for="event in events" role="presentation" v-bind:class="{'active': currentEvent.id == event.id}" v-on:click.prevent="setCurrentEvent($index)">
               <a href="#">{{ event.title }}</a>
             </li>
           </ul>
@@ -54,10 +51,10 @@
                 {{ error }}
               </div>
             </template>
+            <div id="map"></div>
           </div>
         </div>
       </div>
-      <div id="map"></div>
       <footer class="row">
         <p>Brought to you by the <a href="http://berowraapex.org.au">Berowra Apex Club</a></p>
         <a href="http://berowraapex.org.au">
