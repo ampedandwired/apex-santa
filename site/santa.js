@@ -202,6 +202,7 @@ var santa = (function($) {
         });
       },
       error: function(jqXHR, textStatus, err) {
+        console.log(err);
         data.status = _santaStatus(Date.parse(data.currentEvent.start_time), null);
       }
     });
