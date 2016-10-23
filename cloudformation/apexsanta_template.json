@@ -1,5 +1,13 @@
 {
   "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Parameters" : {
+      "AcmCertificateArn" : {
+      "Type" : "String",
+      "Description" : "The ARN of the SSL certificate in Amazon Certificate Manager (ACM)"
+    }
+  },
+
   "Resources" : {
     "S3Bucket" : {
       "Type" : "AWS::S3::Bucket",
@@ -48,10 +56,44 @@
       "Properties": {
         "UserName": {"Ref": "S3User"}
       }
+    },
+
+    "CloudFrontDistribution": {
+      "Type" : "AWS::CloudFront::Distribution",
+      "Properties" : {
+        "DistributionConfig" : {
+          "DefaultCacheBehavior": {
+            "Compress": true,
+            "DefaultTTL": 0,
+            "ForwardedValues": {
+              "QueryString": true
+            },
+            "TargetOriginId": "S3Origin",
+            "ViewerProtocolPolicy": "redirect-to-https"
+          },
+          "Enabled": true,
+          "DefaultRootObject" : "index.html",
+          "Aliases" : [ "santa.berowraapex.org.au" ],
+          "Origins": [{
+            "Id": "S3Origin",
+            "DomainName": {"Fn::GetAtt" : [ "S3Bucket", "DomainName" ]},
+            "S3OriginConfig" : {
+            }
+          }],
+          "ViewerCertificate" : {
+            "AcmCertificateArn" : { "Ref": "AcmCertificateArn" },
+            "SslSupportMethod" : "sni-only"
+          }
+        }
+      }
     }
   },
 
   "Outputs" : {
+    "CloudFrontDomainName" : {
+      "Value" : {"Fn::GetAtt" : [ "CloudFrontDistribution", "DomainName" ]},
+      "Description" : "CloudFront domain"
+    },
     "S3BucketUri" : {
       "Value" : { "Fn::Join" : [ "", [  "s3://", {"Ref": "S3Bucket"} ] ] },
       "Description" : "This is the S3 bucket name"

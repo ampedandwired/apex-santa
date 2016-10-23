@@ -1,6 +1,6 @@
 var santa = (function($) {
   var config = {
-    bucket: "apexsanta-s3bucket-xyojbppcy9qj",
+    bucket: "apexsanta-s3bucket-1nar16akgm9m8",
     region: "ap-southeast-2",
     local: true,
     refreshSeconds: 15
