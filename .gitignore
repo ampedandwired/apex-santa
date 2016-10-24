@@ -3,3 +3,4 @@
 .direnv/
 __pycache__/
 /bin/server.pem
+/site/live/

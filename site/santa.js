@@ -1,7 +1,16 @@
 var santa = (function($) {
   var REFRESH_SECONDS = 15;
   var REGION = "ap-southeast-2";
-  var BASE_URL = window.location .protocol + "//" + window.location.host;
+  var BASE_URL = window.location.protocol + "//" + window.location.host;
+  var IS_LOCAL = window.location.hostname === "localhost" || window.location.hostname == "127.0.0.1";
+
+  function log(msg) {
+    if (IS_LOCAL) { console.log.apply(this, arguments); }
+  }
+
+  function error(msg) {
+    if (IS_LOCAL) { console.error.apply(this, arguments); }
+  }
 
   var config = {
     bucket: "apexsanta-s3bucket-1nar16akgm9m8",
@@ -71,25 +80,36 @@ var santa = (function($) {
           var eventId = data.currentEvent.id
           var loc = {lat: position.coords.latitude, lng: position.coords.longitude, time: new Date().getTime()};
           var locString = JSON.stringify(loc);
-          console.log("Update santa location " + eventId + ": " + locString);
-          var s3 = new AWS.S3();
-          s3.putObject({
-            Bucket: config.bucket,
-            Key: "live/" + eventId + ".json",
-            Body: locString,
-            ACL: "public-read"
-          }, function(err, result) {
-            if (err) {
-              console.log("Error updating santa location: " + err);
-              data.error = err;
-            }
-          });
+          var url = "live/" + eventId + ".json";
+          log("setSantaLocation: Update santa location " + eventId + ": " + locString);
+          if (IS_LOCAL) {
+            $.ajax(url, {
+              type: "POST",
+              data: locString,
+              error: function(xhr, status, err) {
+                error("setSantaLocation: Error updating santa location: " + status + " - " + err);
+                data.error = "Unable to update Santa's location: " + status + " - " + err;
+              }
+            });
+          } else {
+            var s3 = new AWS.S3();
+            s3.putObject({
+              Bucket: config.bucket,
+              Key: url,
+              Body: locString,
+              ACL: "public-read"
+            }, function(err, result) {
+              if (err) {
+                error("setSantaLocation: Error updating santa location: " + err);
+                data.error = "Unable to update Santa's location: " + err;
+              }
+            });
+          }
         }
       }, function(err) {
         data.error = err.message;
       });
     } else {
-      console.log("5");
       data.error = "Unable to determine your current location";
     }
   }
@@ -122,12 +142,10 @@ var santa = (function($) {
 
   function _santaStatus(eventTime, lastSantaUpdateTime) {
     var currentTime = new Date().getTime();
-    console.log(eventTime, currentTime, lastSantaUpdateTime);
     var santaSeenRecently = lastSantaUpdateTime && (currentTime - lastSantaUpdateTime) < 15*60*1000;
     var santaSeenSinceEventStarted = lastSantaUpdateTime && lastSantaUpdateTime >= eventTime;
     var eventStarted = currentTime >= eventTime;
     var eventNearlyStarted = currentTime >= (eventTime - 15*60*1000);
-    console.log("santaSeenRecently " + santaSeenRecently, "santaSeenSinceEventStarted " + santaSeenSinceEventStarted, "eventStarted " + eventStarted, "eventNearlyStarted "+eventNearlyStarted);
     var status = null;
 
     if (eventStarted && !santaSeenSinceEventStarted) {
@@ -144,17 +162,21 @@ var santa = (function($) {
       }
     }
 
+    log("santaStatus:", "santaStatus:", "eventTime " + eventTime, "currentTime " + currentTime, "lastSantaUpdateTime " + lastSantaUpdateTime, "santaSeenRecently " + santaSeenRecently, "santaSeenSinceEventStarted " + santaSeenSinceEventStarted, "eventStarted " + eventStarted, "eventNearlyStarted " + eventNearlyStarted, "santaStatus: ", status);
     return status;
   }
 
   function _refreshSantaLocation() {
-    console.log("Refresh Santa location" + data.currentEvent.id);
     $.ajax({
       url: "/live/" + data.currentEvent.id + ".json",
       type: "GET",
       success: function(result) {
-        console.log("Refreshed Santa location " + data.currentEvent.id + ": " + JSON.stringify(result));
-        var loc = JSON.parse(result);
+        log("refreshSantaLocation: " + data.currentEvent.id + ": " + JSON.stringify(result));
+        var loc = result;
+        if (typeof loc === 'string') {
+          loc = JSON.parse(result);
+        }
+
         var locTime = loc.time;
         data.status = _santaStatus(Date.parse(data.currentEvent.start_time), locTime);
         var image = {
@@ -174,7 +196,7 @@ var santa = (function($) {
         });
       },
       error: function(jqXHR, textStatus, err) {
-        console.log(err);
+        error("refreshSantaLocation: Error: " + err);
         data.status = _santaStatus(Date.parse(data.currentEvent.start_time), null);
       }
     });
