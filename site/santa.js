@@ -1,42 +1,14 @@
 var santa = (function($) {
+  var REFRESH_SECONDS = 15;
+  var REGION = "ap-southeast-2";
+  var BASE_URL = window.location .protocol + "//" + window.location.host;
+
   var config = {
     bucket: "apexsanta-s3bucket-1nar16akgm9m8",
-    region: "ap-southeast-2",
-    local: true,
-    refreshSeconds: 15
   };
 
-  config.baseUrl = "https://s3-" + config.region + ".amazonaws.com/" + config.bucket;
-
-  var events = [
-    {
-      id: "berowra-heights-2016",
-      kml: "berowra-heights2-2016.kml",
-      title: "Berowra Heights",
-      start_time: "2016-12-16 19:00:00+11",
-      start_time_nice: "Friday 16th December, 7pm",
-      description: "Starts at Coles and finishes at Warrina Oval. Come and join us afterwards at Warrina Oval for a BBQ."
-    },
-    {
-      id: "berowra-2016",
-      kml: "berowra2-2016.kml",
-      title: "Berowra",
-      start_time: "2016-12-17 18:00:00+11",
-      start_time_nice: "Saturday 17th December, 6pm",
-      description: "Starts at Coles and finishes at Berowra Oval. There will be a BBQ, jumping castle and Santa photos at the oval afterwards."
-    },
-    {
-      id: "blacktown-2016",
-      kml: "berowra2-2016.kml",
-      title: "Blacktown",
-      start_time: "2016-12-18 14:00:00+11",
-      start_time_nice: "Sunday 18th December, 2pm",
-      description: "Cruise the streets of Blacktown"
-    }
-  ];
-
   var currentTime = new Date().getTime();
-  events = events.filter(function(e) {
+  events = santa_events.filter(function(e) {
     return Date.parse(e.start_time) >= currentTime - (24*60*60*1000);
   }).sort(function(a, b) {
     return a.start_time - b.start_time;
@@ -57,7 +29,7 @@ var santa = (function($) {
     secret = _getParameterByName("secret");
     if (id !== null && secret !== null) {
       AWS.config.update({accessKeyId: id, secretAccessKey: secret});
-      AWS.config.region = 'ap-southeast-2';
+      AWS.config.region = REGION;
       return {
         id: id,
         secret: secret
@@ -178,7 +150,7 @@ var santa = (function($) {
   function _refreshSantaLocation() {
     console.log("Refresh Santa location" + data.currentEvent.id);
     $.ajax({
-      url: config.baseUrl + "/live/" + data.currentEvent.id + ".json",
+      url: "/live/" + data.currentEvent.id + ".json",
       type: "GET",
       success: function(result) {
         console.log("Refreshed Santa location " + data.currentEvent.id + ": " + JSON.stringify(result));
@@ -209,7 +181,7 @@ var santa = (function($) {
   }
 
   var initMap = function() {
-    var kmlUrl = config.baseUrl + "/data/" + data.currentEvent.kml;
+    var kmlUrl = "http://www.google.com/maps/d/kml?mid=" + data.currentEvent.id;
     var map = map = new google.maps.Map(document.getElementById('map'));
     data.map = map;
     var kmlLayer = new google.maps.KmlLayer(kmlUrl, {
@@ -221,7 +193,7 @@ var santa = (function($) {
     _refreshCurrentLocation(map);
     (function updateSanta(){
       _refreshSantaLocation();
-      setTimeout(updateSanta, config.refreshSeconds * 1000);
+      setTimeout(updateSanta, REFRESH_SECONDS * 1000);
     })();
   };
 
@@ -240,7 +212,7 @@ var santa = (function($) {
       (function updateTracking(){
         if (data.tracking) {
           _setSantaLocation();
-          setTimeout(updateTracking, config.refreshSeconds * 1000);
+          setTimeout(updateTracking, REFRESH_SECONDS * 1000);
         }
       })();
     }
