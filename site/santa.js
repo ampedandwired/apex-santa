@@ -4,6 +4,10 @@ var santa = (function($) {
   var BASE_URL = window.location.protocol + "//" + window.location.host;
   var IS_LOCAL = window.location.hostname === "localhost" || window.location.hostname == "127.0.0.1";
 
+  var config = {
+    bucket: "apexsanta-s3bucket-1nar16akgm9m8",
+  };
+
   function log(msg) {
     if (IS_LOCAL) { console.log.apply(this, arguments); }
   }
@@ -12,16 +16,14 @@ var santa = (function($) {
     if (IS_LOCAL) { console.error.apply(this, arguments); }
   }
 
-  var config = {
-    bucket: "apexsanta-s3bucket-1nar16akgm9m8",
-  };
-
-  var currentTime = new Date().getTime();
-  events = santa_events.filter(function(e) {
-    return Date.parse(e.start_time) >= currentTime - (24*60*60*1000);
-  }).sort(function(a, b) {
-    return a.start_time - b.start_time;
-  });
+  function _getEvents() {
+    var currentTime = new Date().getTime();
+    return santa_events.filter(function(e) {
+      return Date.parse(e.start_time) >= currentTime - (24*60*60*1000);
+    }).sort(function(a, b) {
+      return a.start_time - b.start_time;
+    });
+  }
 
   function _getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -49,26 +51,30 @@ var santa = (function($) {
   }
 
   var data = {
-    events: events,
-    currentEvent: events[0],
+    events: _getEvents(),
+    currentEvent: _getEvents()[0],
     credentials: _getCredentials(),
     tracking: false,
     status: null,
     error: null
   };
 
-  function _refreshCurrentLocation(map) {
+  function _refreshCurrentLocation() {
     if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
-        var myloc = new google.maps.Marker({
-          position: {lat: position.coords.latitude, lng: position.coords.longitude},
-          icon: new google.maps.MarkerImage('//maps.gstatic.com/mapfiles/mobile/mobileimgs2.png',
-                                            new google.maps.Size(22,22), new google.maps.Point(0,18), new google.maps.Point(11,11)),
-          clickable: false,
-          shadow: null,
-          zIndex: 900,
-          map: map
-        });
+        if (typeof myMarker === 'undefined' || myMarker == null) {
+          // Global so we only have one marker on the map
+          myMarker = new google.maps.Marker({
+            icon: new google.maps.MarkerImage('//maps.gstatic.com/mapfiles/mobile/mobileimgs2.png',
+                                              new google.maps.Size(22,22), new google.maps.Point(0,18), new google.maps.Point(11,11)),
+            clickable: false,
+            shadow: null,
+            zIndex: 900,
+            map: data.map
+          });
+        }
+
+        myMarker.setPosition({lat: position.coords.latitude, lng: position.coords.longitude});
       });
     }
   }
@@ -114,7 +120,7 @@ var santa = (function($) {
     }
   }
 
-  function timeTill(date) {
+  function _timeTill(date) {
     var seconds = Math.floor((date - new Date()) / 1000);
     var interval = Math.floor(seconds / 31536000);
 
@@ -156,7 +162,7 @@ var santa = (function($) {
       status = "Santa is in town! You can find him on the map below.";
     } else {
       if (!eventStarted) {
-        status = "Only " + timeTill(Date.parse(data.currentEvent.start_time)) + " to go until Santa's visit!";
+        status = "Only " + _timeTill(Date.parse(data.currentEvent.start_time)) + " to go until Santa's visit!";
       } else {
         status = "Santa is back in the North Pole. See you next year!"
       }
@@ -179,21 +185,23 @@ var santa = (function($) {
 
         var locTime = loc.time;
         data.status = _santaStatus(Date.parse(data.currentEvent.start_time), locTime);
-        var image = {
-          url: "/assets/santa_marker.png",
-          size: new google.maps.Size(40, 47),
-          origin: new google.maps.Point(0, 0),
-          anchor: new google.maps.Point(20, 20)
-        };
+        if (typeof santaMarker === 'undefined' || santaMarker === null) {
+          // Global so we only have one marker on the map
+          santaMarker = new google.maps.Marker({
+            clickable: false,
+            icon: {
+              url: "/assets/santa_marker.png",
+              size: new google.maps.Size(40, 47),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(20, 40)
+            },
+            shadow: null,
+            zIndex: 910,
+            map: data.map
+          });
+        }
 
-        var santaLoc = new google.maps.Marker({
-          position: loc,
-          clickable: false,
-          icon: image,
-          shadow: null,
-          zIndex: 910,
-          map: data.map
-        });
+        santaMarker.setPosition(loc);
       },
       error: function(jqXHR, textStatus, err) {
         error("refreshSantaLocation: Error: " + err);
@@ -212,8 +220,8 @@ var santa = (function($) {
       suppressInfoWindows: true,
     });
 
-    _refreshCurrentLocation(map);
     (function updateSanta(){
+      _refreshCurrentLocation();
       _refreshSantaLocation();
       setTimeout(updateSanta, REFRESH_SECONDS * 1000);
     })();
@@ -231,7 +239,7 @@ var santa = (function($) {
   var startTracking = function() {
     if (!data.tracking) {
       data.tracking = true;
-      (function updateTracking(){
+      (function updateTracking() {
         if (data.tracking) {
           _setSantaLocation();
           setTimeout(updateTracking, REFRESH_SECONDS * 1000);
