@@ -4,3 +4,4 @@
 __pycache__/
 /bin/server.pem
 /site/live/
+/site/config.js

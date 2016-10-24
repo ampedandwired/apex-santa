@@ -71,6 +71,10 @@
             "TargetOriginId": "S3Origin",
             "ViewerProtocolPolicy": "redirect-to-https"
           },
+          "CustomErrorResponses" : [{
+            "ErrorCode" : 404,
+            "ErrorCachingMinTTL" : 0
+          }],
           "Enabled": true,
           "DefaultRootObject" : "index.html",
           "Aliases" : [ "santa.berowraapex.org.au" ],
@@ -92,18 +96,18 @@
   "Outputs" : {
     "CloudFrontDomainName" : {
       "Value" : {"Fn::GetAtt" : [ "CloudFrontDistribution", "DomainName" ]},
-      "Description" : "CloudFront domain"
+      "Description" : "CloudFront domain - create santa.berowraapex.org.au as a CNAME record in DNS pointing at this"
     },
-    "S3BucketUri" : {
-      "Value" : { "Fn::Join" : [ "", [  "s3://", {"Ref": "S3Bucket"} ] ] },
-      "Description" : "This is the S3 bucket name"
+    "S3BucketName" : {
+      "Value" : { "Ref": "S3Bucket" },
+      "Description" : "This is the S3 bucket name, which is used by the Javascript code when uploading Santa's current location."
     },
     "WebsiteURLTracker" : {
-      "Value" : { "Fn::Join": ["", [{"Fn::GetAtt" : [ "S3Bucket", "WebsiteURL" ]}, "?id=", {"Ref": "S3AccessKey"}, "&secret=", {"Fn::GetAtt": ["S3AccessKey", "SecretAccessKey"]} ]] },
-      "Description" : "This is the Santa's secret URL (don't share this publically)"
+      "Value" : { "Fn::Join": ["", ["https://santa.berowraapex.org.au", "?id=", {"Ref": "S3AccessKey"}, "&secret=", {"Fn::GetAtt": ["S3AccessKey", "SecretAccessKey"]} ]] },
+      "Description" : "This is the URL to use on Santa's sleigh to track his location (don't share this publicly)"
     },
     "WebsiteURL" : {
-      "Value" : { "Fn::GetAtt" : [ "S3Bucket", "WebsiteURL" ] },
+      "Value" : "https://santa.berowraapex.org.au",
       "Description" : "This is the public URL of the website"
     }
   }

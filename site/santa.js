@@ -3,17 +3,14 @@ var santa = (function($) {
   var REGION = "ap-southeast-2";
   var BASE_URL = window.location.protocol + "//" + window.location.host;
   var IS_LOCAL = window.location.hostname === "localhost" || window.location.hostname == "127.0.0.1";
-
-  var config = {
-    bucket: "apexsanta-s3bucket-1nar16akgm9m8",
-  };
+  var DEBUG_ENABLED = true; //IS_LOCAL;
 
   function log(msg) {
-    if (IS_LOCAL) { console.log.apply(this, arguments); }
+    if (DEBUG_ENABLED) { console.log.apply(this, arguments); }
   }
 
   function error(msg) {
-    if (IS_LOCAL) { console.error.apply(this, arguments); }
+    if (DEBUG_ENABLED) { console.error.apply(this, arguments); }
   }
 
   function _getEvents() {
@@ -88,7 +85,7 @@ var santa = (function($) {
           } else {
             var s3 = new AWS.S3();
             s3.putObject({
-              Bucket: config.bucket,
+              Bucket: santa_config.bucket,
               Key: url,
               Body: locString,
               ACL: "public-read"

@@ -7,9 +7,11 @@ import botocore
 
 
 class ApexSanta:
+    SCRIPT_DIR = os.path.realpath(os.path.dirname(__file__))
+    SITE_DIR = os.path.join(SCRIPT_DIR, "../site")
     STACK_NAME = "apexsanta"
     SANTA_DOMAIN = "santa.berowraapex.org.au"
-    TEMPLATE_FILE = "cloudformation/apexsanta_template.json"
+    TEMPLATE_FILE = os.path.join(SCRIPT_DIR, "../cloudformation/apexsanta_template.json")
 
     def __init__(self):
         self.cfn = boto3.client("cloudformation", "ap-southeast-2")
@@ -108,18 +110,30 @@ class ApexSanta:
         raise "Unable to find SSL certificate for {}. Please follow the readme instructions for creating the certificate.".format(self.SANTA_DOMAIN)
 
 
-    def get_s3_uri(self):
+    def get_s3_bucket_name(self):
         outputs = self.get_outputs()
-        s3_uri_output = next(output for output in outputs if output['OutputKey'] == 'S3BucketUri')
-        if s3_uri_output:
-            return s3_uri_output['OutputValue']
+        s3_bucket_name_output = next(output for output in outputs if output['OutputKey'] == 'S3BucketName')
+        if s3_bucket_name_output:
+            return s3_bucket_name_output['OutputValue']
         else:
             return None
+
+    def get_s3_uri(self):
+        bucket_name = self.get_s3_bucket_name()
+        return "s3://{}".format(bucket_name) if bucket_name else None
+
+
+    def generate_config(self):
+        config = 'var santa_config = {{ bucket: "{}" }};'.format(self.get_s3_bucket_name())
+        with open(os.path.join(self.SITE_DIR, "config.js"), "w") as f:
+            f.write(config)
+
 
     def upload_site(self):
         s3_uri = self.get_s3_uri()
         if s3_uri:
             print("Uploading site to {}...".format(s3_uri))
+            self.generate_config()
             os.system("aws s3 sync --delete --exclude live/* --acl public-read ./site {}".format(s3_uri))
             print("Site uploaded")
         else:
