@@ -180,7 +180,7 @@ var santa = (function($) {
         var locTime = loc.time;
         data.status = _santaStatus(Date.parse(data.currentEvent.start_time), locTime);
         var image = {
-          url: "/assets/santa.png",
+          url: "/assets/santa_marker.png",
           size: new google.maps.Size(40, 40),
           origin: new google.maps.Point(0, 0),
           anchor: new google.maps.Point(20, 20)
