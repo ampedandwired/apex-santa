@@ -62,19 +62,7 @@ var santa = (function($) {
   function _refreshCurrentLocation() {
     if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
-        if (typeof myMarker === 'undefined' || myMarker == null) {
-          // Global so we only have one marker on the map
-          myMarker = new google.maps.Marker({
-            icon: new google.maps.MarkerImage('//maps.gstatic.com/mapfiles/mobile/mobileimgs2.png',
-                                              new google.maps.Size(22,22), new google.maps.Point(0,18), new google.maps.Point(11,11)),
-            clickable: false,
-            shadow: null,
-            zIndex: 900,
-            map: data.map
-          });
-        }
-
-        myMarker.setPosition({lat: position.coords.latitude, lng: position.coords.longitude});
+        data.myMarker.setPosition({lat: position.coords.latitude, lng: position.coords.longitude});
       });
     }
   }
@@ -185,23 +173,7 @@ var santa = (function($) {
 
         var locTime = loc.time;
         data.status = _santaStatus(Date.parse(data.currentEvent.start_time), locTime);
-        if (typeof santaMarker === 'undefined' || santaMarker === null) {
-          // Global so we only have one marker on the map
-          santaMarker = new google.maps.Marker({
-            clickable: false,
-            icon: {
-              url: "/assets/santa_marker.png",
-              size: new google.maps.Size(40, 47),
-              origin: new google.maps.Point(0, 0),
-              anchor: new google.maps.Point(20, 40)
-            },
-            shadow: null,
-            zIndex: 910,
-            map: data.map
-          });
-        }
-
-        santaMarker.setPosition(loc);
+        data.santaMarker.setPosition(loc);
       },
       error: function(jqXHR, textStatus, err) {
         error("refreshSantaLocation: Error: " + err);
@@ -214,6 +186,28 @@ var santa = (function($) {
     var kmlUrl = "http://www.google.com/maps/d/kml?mid=" + data.currentEvent.id;
     var map = map = new google.maps.Map(document.getElementById('map'));
     data.map = map;
+    data.santaMarker = new google.maps.Marker({
+      clickable: false,
+      icon: {
+        url: "/assets/santa_marker.png",
+        size: new google.maps.Size(40, 47),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(20, 40)
+      },
+      shadow: null,
+      zIndex: 910,
+      map: data.map
+    });
+
+    data.myMarker = new google.maps.Marker({
+      icon: new google.maps.MarkerImage('//maps.gstatic.com/mapfiles/mobile/mobileimgs2.png',
+                                        new google.maps.Size(22,22), new google.maps.Point(0,18), new google.maps.Point(11,11)),
+      clickable: false,
+      shadow: null,
+      zIndex: 900,
+      map: data.map
+    });
+
     var kmlLayer = new google.maps.KmlLayer(kmlUrl, {
       map: map,
       preserveViewport: false,
