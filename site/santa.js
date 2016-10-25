@@ -129,7 +129,7 @@ var santa = (function($) {
   // Refreshes the current location of Santa on the user's device
   function _refreshSantaLocation() {
     $.ajax({
-      url: "/live/" + data.currentEvent.id + ".json",
+      url: "/live/" + data.currentEvent.id + ".json?uuid=" + Math.random().toString(),
       type: "GET",
       success: function(result) {
         var loc = result;
@@ -210,7 +210,7 @@ var santa = (function($) {
     }
   }
 
-  // Initialised the Google map with the KML file of the curreent event.
+  // Initialise the Google map with the KML file of the current event.
   // Also serves as a general init method for the app.
   var initMap = function() {
     var kmlUrl = "http://www.google.com/maps/d/kml?mid=" + data.currentEvent.id;
