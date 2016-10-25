@@ -15,7 +15,7 @@ class ApexSanta:
     TEMPLATE_FILE = os.path.join(SCRIPT_DIR, "../cloudformation/apexsanta_template.json")
 
     def __init__(self):
-        self.cfn = boto3.client("cloudformation", AWS_REGION)
+        self.cfn = boto3.client("cloudformation", self.AWS_REGION)
         with open(self.TEMPLATE_FILE) as f:
             self.template = f.read()
 
@@ -125,7 +125,7 @@ class ApexSanta:
 
 
     def generate_config(self):
-        config = 'var santa_config = {{ region: "{}", bucket: "{}" }};'.format(AWS_REGION, self.get_s3_bucket_name())
+        config = 'var santa_config = {{ region: "{}", bucket: "{}" }};'.format(self.AWS_REGION, self.get_s3_bucket_name())
         with open(os.path.join(self.SITE_DIR, "config.js"), "w") as f:
             f.write(config)
 

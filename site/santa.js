@@ -132,15 +132,23 @@ var santa = (function($) {
       url: "/live/" + data.currentEvent.id + ".json",
       type: "GET",
       success: function(result) {
-        log("refreshSantaLocation: " + data.currentEvent.id + ": " + JSON.stringify(result));
         var loc = result;
         if (typeof loc === 'string') {
           loc = JSON.parse(result);
         }
 
-        var locTime = loc.time;
-        data.status = _santaStatus(Date.parse(data.currentEvent.start_time), locTime);
-        data.santaMarker.setPosition(loc);
+        log("refreshSantaLocation: " + data.currentEvent.id + ": " + JSON.stringify(loc));
+        var lastSantaUpdateTime = loc.time;
+        var currentTime = new Date().getTime();
+        var timeSinceSantaSeen = currentTime - lastSantaUpdateTime;
+        var santaGone = timeSinceSantaSeen > CONSIDER_SANTA_GONE_IF_NO_UPDATE_FOR_MINUTES*60*1000;
+        data.status = _santaStatus(Date.parse(data.currentEvent.start_time), lastSantaUpdateTime);
+        if (!santaGone) {
+          data.santaMarker.setPosition(loc);
+        } else {
+          log("Santa gone")
+          data.santaMarker.setPosition(null);
+        }
       },
       error: function(jqXHR, textStatus, err) {
         error("refreshSantaLocation: Error: " + err);
