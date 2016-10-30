@@ -24,43 +24,58 @@
         <h1 class="text-center">Santa Claus is Coming to Town!</h1>
       </div>
       <div id="content" class="container" v-cloak>
-        <div id="lead">
-          <p class="lead">Santa is making a special trip through the streets of Berowra and Blacktown this Christmas. View his route and track him live right here.</p>
+        <div v-if="currentEvent">
+          <div id="lead">
+            <p class="lead">Santa is making a special trip through the streets of Berowra and Blacktown this Christmas. View his route and track him live right here.</p>
+          </div>
+          <div id="events" class="row">
+            <ul class="nav nav-pills nav-justified">
+              <li v-for="event in events" role="presentation" v-bind:class="{'active': currentEvent.id == event.id}" v-on:click.prevent="setCurrentEvent($index)">
+                <a href="#">{{ event.title }}</a>
+              </li>
+            </ul>
+          </div>
+          <div class="row">
+            <div id="event-details">
+              <h2>{{ currentEvent.title }} - {{ currentEvent.start_time_nice }}</h2>
+              <p>{{ currentEvent.description }}</p>
+              <p><strong>{{ status }}</strong></p>
+              <template v-if="credentials">
+                <button type="button" class="btn btn-lg btn-success" v-bind:class="{'disabled': tracking}" v-on:click.prevent="startTracking">
+                  <span class="glyphicon glyphicon-play"></span> Start
+                </button>
+                <button type="button" class="btn btn-lg btn-warning" v-bind:class="{'disabled': !tracking}" v-on:click="stopTracking">
+                  <span class="glyphicon glyphicon-stop"></span> Stop
+                </button>
+                <div v-if="error" class="alert alert-danger alert-dismissible" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  {{ error }}
+                </div>
+              </template>
+              <div id="map"></div>
+            </div>
+          </div>
+          <footer class="row">
+            <p>Brought to you by the <a href="http://berowraapex.org.au">Berowra Apex Club</a></p>
+            <a href="http://berowraapex.org.au">
+              <img src="assets/apex_logo.png" title="Brought to you by Berowra Apex Club" alt="logo" width="200" height="155" />
+            </a>
+          </footer>
         </div>
-        <div id="events" class="row">
-          <ul class="nav nav-pills nav-justified">
-            <li v-for="event in events" role="presentation" v-bind:class="{'active': currentEvent.id == event.id}" v-on:click.prevent="setCurrentEvent($index)">
-              <a href="#">{{ event.title }}</a>
-            </li>
-          </ul>
-        </div>
-        <div class="row">
-          <div id="event-details">
-            <h2>{{ currentEvent.title }} - {{ currentEvent.start_time_nice }}</h2>
-            <p>{{ currentEvent.description }}</p>
-            <p><strong>{{ status }}</strong></p>
-            <template v-if="credentials">
-              <button type="button" class="btn btn-lg btn-success" v-bind:class="{'disabled': tracking}" v-on:click.prevent="startTracking">
-                <span class="glyphicon glyphicon-play"></span> Start
-              </button>
-              <button type="button" class="btn btn-lg btn-warning" v-bind:class="{'disabled': !tracking}" v-on:click="stopTracking">
-                <span class="glyphicon glyphicon-stop"></span> Stop
-              </button>
-              <div v-if="error" class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                {{ error }}
-              </div>
-            </template>
-            <div id="map"></div>
+        <div v-if="!currentEvent">
+          <div id="lead">
+            <p class="lead">Santa is back in the North Pole getting ready for Christmas. See you again next year!</p>
+            <p class="lead">Merry Christmas and a happy new year from all of us at Berowra Apex.</p>
+            <hr/>
+            <footer class="row">
+              <p>Love Berowra? Why not join the <a href="http://berowraapex.org.au">Berowra Apex Club</a> and have some fun while giving back to the community?</p>
+              <a href="http://berowraapex.org.au">
+                <img src="assets/apex_logo.png" title="Brought to you by Berowra Apex Club" alt="logo" width="200" height="155" />
+              </a>
+            </footer>
           </div>
         </div>
       </div>
-      <footer class="row">
-        <p>Brought to you by the <a href="http://berowraapex.org.au">Berowra Apex Club</a></p>
-        <a href="http://berowraapex.org.au">
-          <img src="assets/apex_logo.png" title="Brought to you by Berowra Apex Club" alt="logo" width="200" height="155" />
-        </a>
-      </footer>
     </div>
 
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" crossorigin="anonymous"></script>

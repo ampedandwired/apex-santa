@@ -18,6 +18,10 @@ a:hover, a:focus {
   color: #4dc3ff;
 }
 
+hr {
+  border: 1px solid #600;
+}
+
 #header {
   background-color: #660000;
 }
