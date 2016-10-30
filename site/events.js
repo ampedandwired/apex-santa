@@ -18,6 +18,6 @@ var santa_events = [
     title: "Blacktown",
     start_time: "2016-12-18 14:00:00+11",
     start_time_nice: "Sunday 18th December, 2pm",
-    description: "Cruise the streets of Blacktown"
+    description: "Cruise the streets of Blacktown, brought to you by <a href=\"http://www.apexblacktown.com/\">Blacktown Apex</a>"
   }
 ];
