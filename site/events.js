@@ -8,10 +8,10 @@ var santa_events = [
   },
   {
     id: "1mIS81SeIlT-NVMl1LSlZCETdTvU",
-    title: "Crosslands Reserve",
+    title: "Crossroads Reserve",
     start_time: "2016-12-09T17:00:00+11:00",
     start_time_nice: "Friday 9th December, 5pm",
-    description: "Barnetts and other areas west of Berowra Waters Road. Join Santa at Crosslands Reserve from 6pm for photos. Christmas trees will also be on sale at the reserve."
+    description: "Barnetts and other areas west of Berowra Waters Road. Join Santa at Crossroads Reserve from 6pm for photos. Christmas trees will also be on sale at the reserve."
   },
   {
     id: "1XHsOpkQoQW5SqNT4gTS3Vp07NNQ",
