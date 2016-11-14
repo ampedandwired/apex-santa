@@ -25,11 +25,11 @@ var santa = (function($) {
 
 
   function log(msg) {
-    if (DEBUG_ENABLED) { console.log.apply(this, arguments); }
+    if (DEBUG_ENABLED) { console.log.apply(console, arguments); }
   }
 
   function error(msg) {
-    if (DEBUG_ENABLED) { console.error.apply(this, arguments); }
+    if (DEBUG_ENABLED) { console.error.apply(console, arguments); }
   }
 
   // Extracts a named param from the URL
