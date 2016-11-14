@@ -7,7 +7,6 @@ body {
   font-family: 'Merienda One', cursive;
   background-color: #880000;
   color: #EEE;
-
 }
 
 a {
@@ -64,6 +63,7 @@ hr {
 
 #event-details {
   font-family: 'Merienda', cursive;
+  font-size: 1.3em;
   margin-top: 2em;
   margin-bottom: 2em;
 }

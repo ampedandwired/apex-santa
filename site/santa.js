@@ -146,7 +146,7 @@ var santa = (function($) {
         if (!santaGone) {
           data.santaMarker.setPosition(loc);
         } else {
-          log("Santa gone")
+          log("Santa gone");
           data.santaMarker.setPosition(null);
         }
       },
