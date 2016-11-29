@@ -1,12 +1,5 @@
 var santa_events = [
   {
-    id: "19DPVg5mIFcWpu__-iB9rnkraKLI",
-    title: "Cowan",
-    start_time: "2016-12-08T17:00:00+11:00",
-    start_time_nice: "Thursday 8th December, 5pm",
-    description: "Santa will cruise the streets of Cowan with the RFS, starting at the general store and finishing up at Cowan Park. Join Santa at the park after for photos."
-  },
-  {
     id: "1mIS81SeIlT-NVMl1LSlZCETdTvU",
     title: "Crossroads Reserve",
     start_time: "2016-12-09T17:00:00+11:00",
