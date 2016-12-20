@@ -54,6 +54,9 @@
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                   {{ error }}
                 </div>
+                <div v-if="lastSantaLocationUpdate">
+                  <p>Last update: {{ lastSantaLocationUpdate }}</p>
+                </div>
               </template>
               <div id="map"></div>
             </div>

@@ -8,16 +8,16 @@ var santa_events = [
   },
   {
     id: "1XHsOpkQoQW5SqNT4gTS3Vp07NNQ",
-    title: "Warrina Oval",
+    title: "Warrina Oval (CANCELLED)",
     start_time: "2016-12-15T18:00:00+11:00",
     start_time_nice: "Thursday 15th December, 5pm",
-    description: "Turner, Woodcourt, Wideview, Lonsdale and Alan Road. Join Santa at Warrina Oval from 6pm for photos, BBQ and jumping castle."
+    description: "THIS EVENT HAS BEEN CANCELLED DUE TO INCLEMENT WEATHER. WE WILL ATTEMPT TO RESCHEDULE NEXT WEEK."
   },
   {
     id: "1iIDFz8Tphh-xXaHMVMLGfv4QTA0",
     title: "Berowra Oval",
     start_time: "2016-12-22T18:00:00+11:00",
     start_time_nice: "Thursday 22nd December, 5pm",
-    description: "Gully Rd and Berowra. Join Santa at Berowra Oval from 6pm for photos, BBQ and jumping castle."
+    description: "Gully Rd and Berowra. Join Santa at Berowra Oval from 5pm for photos, BBQ and jumping castle."
   }
 ];

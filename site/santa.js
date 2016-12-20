@@ -8,7 +8,7 @@ var santa = (function($) {
 
   // Controls how frequently Santa's location gets updated as well as how frequently
   // it gets refreshed on end user's devices.
-  var REFRESH_SECONDS = 15;
+  var REFRESH_SECONDS = 3;
 
   // After the event has finished, keep it displayed on the site for this long
   // (with a message indicating it has finished).
@@ -153,6 +153,7 @@ var santa = (function($) {
       error: function(jqXHR, textStatus, err) {
         error("refreshSantaLocation: Error: " + err);
         data.status = _santaStatus(Date.parse(data.currentEvent.start_time), null);
+        data.santaMarker.setPosition(null);
       }
     });
   }
@@ -171,11 +172,13 @@ var santa = (function($) {
     if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
         if (data.tracking) {
-          var eventId = data.currentEvent.id
-          var loc = {lat: position.coords.latitude, lng: position.coords.longitude, time: new Date().getTime()};
+          var eventId = data.currentEvent.id;
+          var now = new Date();
+          var loc = {lat: position.coords.latitude, lng: position.coords.longitude, time: now.getTime()};
           var locString = JSON.stringify(loc);
           var url = "live/" + eventId + ".json";
           log("setSantaLocation: Update santa location " + eventId + ": " + locString);
+          data.lastSantaLocationUpdate = "lat " + position.coords.latitude + ", lng " + position.coords.longitude + ", time " + now.toLocaleTimeString();
           if (IS_LOCAL) {
             // App is running locally - post the location to localhost
             $.ajax(url, {
@@ -257,6 +260,7 @@ var santa = (function($) {
     var newEvent = data.events[index];
     if (newEvent.id !== data.currentEvent.id) {
       data.tracking = false;
+      data.lastSantaLocationUpdate = null;
       data.currentEvent = newEvent;
       initMap();
     }
@@ -289,7 +293,8 @@ var santa = (function($) {
     credentials: _getCredentials(),
     tracking: false,
     status: null,
-    error: null
+    error: null,
+    lastSantaLocationUpdate: null
   };
 
   // The Vue instance
