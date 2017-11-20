@@ -40,7 +40,7 @@ if not os.path.isfile(CERT_FILE):
         exit(1)
 
 os.chdir(SITE_DIR)
-httpd = http.server.HTTPServer(('localhost', PORT), SantaRequestHandler)
+httpd = http.server.HTTPServer(('0.0.0.0', PORT), SantaRequestHandler)
 httpd.socket = ssl.wrap_socket(httpd.socket, certfile=CERT_FILE, server_side=True)
 logging.info("Public URL: https://localhost:{}".format(PORT))
 logging.info("Santa URL:  https://localhost:{}?id=x&secret=y".format(PORT))
