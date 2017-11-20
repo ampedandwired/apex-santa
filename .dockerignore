@@ -1,0 +1,5 @@
+.git
+.direnv
+.envrc
+*.pyc
+__pycache__/
