@@ -1,8 +1,13 @@
 version: '3'
 services:
-  web:
+  santa:
     build: .
     ports:
       - "4443:4443"
     volumes:
       - .:/usr/src/app
+    environment:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_REGION
+      - AWS_DEFAULT_REGION
