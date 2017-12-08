@@ -2,7 +2,7 @@ var santa_events = [
   {
     id: "1Sz4LoLzQMNvKCq0F3HWrOB0vFNCVrUHr",
     title: "Crossroads Reserve",
-    start_time: "2017-12-08T17:00:00+11:00",
+    start_time: "2017-12-08T18:00:00+11:00",
     start_time_nice: "Friday 8th December, 6pm",
     description: "Barnetts and other areas west of Berowra Waters Road finishing at Crossroads Reserve, with a special stop at Berowra Public School Christmas carols! Christmas trees will also be on sale at Crossroads Reserve."
   },
