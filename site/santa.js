@@ -25,9 +25,9 @@ var santa = (function($) {
 
   // Google caches KML files for ages, which means your map updates
   // may not be seen on user's devices for a long time. So
-  // generate a unique cache buster param to force a refresh
-  // every time the page is loaded.
-  var GOOGLE_MAPS_CACHE_BUSTER = Math.random().toString();
+  // use a unique cache buster param to force a refresh.
+  // You should increment this every time you change the maps.
+  var GOOGLE_MAPS_CACHE_BUSTER = "1";
 
 
   function log(msg) {
