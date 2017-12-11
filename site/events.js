@@ -19,12 +19,5 @@ var santa_events = [
     start_time: "2017-12-21T17:00:00+11:00",
     start_time_nice: "Thursday 21st December, 5pm",
     description: "Gully Rd and Berowra. Join Santa at Berowra Oval from 6pm for photos, BBQ and jumping castle."
-  },
-  {
-    id: "19DPVg5mIFcWpu__-iB9rnkraKLI",
-    title: "Cowan",
-    start_time: "2017-12-23T15:00:00+11:00",
-    start_time_nice: "Saturday 23rd December, 3pm",
-    description: "Santa joins the Cowan RFS for a jaunt round the streets of Cowan, finishing up at the general store"
   }
 ];
