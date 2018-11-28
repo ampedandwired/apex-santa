@@ -5,7 +5,7 @@ html, body {
 
 body {
   font-family: 'Merienda One', cursive;
-  background-color: #880000;
+  background-color: #B1272D;
   color: #EEE;
 }
 
@@ -22,7 +22,7 @@ hr {
 }
 
 #header {
-  background-color: #660000;
+  background-color: #770000;
 }
 
 #header h1 {
@@ -45,24 +45,25 @@ hr {
 }
 
 #events li {
-  border: 1px solid #A00;
+  border: 1px solid #af0000;
 }
 
 .nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
-  background-color: #006000;
+  background-color: #57a557;
 }
 
 .nav-pills > li > a {
   color: #FFF;
+  background-color: #700;
 }
 
 .nav-pills > li:hover > a, .nav-pills > li:focus > a {
-  background-color: #AA0000;
+  background-color: #af0000;
   color: #FFF;
 }
 
 #event-details {
-  font-family: 'Merienda', cursive;
+  font-family: "Arial", Helvetica, sans-serif;
   font-size: 1.3em;
   margin-top: 2em;
   margin-bottom: 2em;
