@@ -23,12 +23,6 @@ var santa = (function($) {
   // If he starts before this, he won't show up on the map.
   var EVENT_START_LEEWAY_MINUTES = 15;
 
-  // Google caches KML files for ages, which means your map updates
-  // may not be seen on user's devices for a long time. So
-  // use a unique cache buster param to force a refresh.
-  // You should increment this every time you change the maps.
-  var GOOGLE_MAPS_CACHE_BUSTER = "1";
-
 
   function log(msg) {
     if (DEBUG_ENABLED) { console.log.apply(console, arguments); }
@@ -222,7 +216,8 @@ var santa = (function($) {
   // Initialise the Google map with the KML file of the current event.
   // Also serves as a general init method for the app.
   var initMap = function() {
-    var kmlUrl = "http://www.google.com/maps/d/kml?mid=" + data.currentEvent.id + "&" + GOOGLE_MAPS_CACHE_BUSTER;
+    // Add deploy_id query param to force maps refresh after deploy
+    var kmlUrl = "http://www.google.com/maps/d/kml?mid=" + data.currentEvent.id + "&santa_id" + santa_config.deploy_id;
     var map = map = new google.maps.Map(document.getElementById('map'));
     data.map = map;
     data.santaMarker = new google.maps.Marker({

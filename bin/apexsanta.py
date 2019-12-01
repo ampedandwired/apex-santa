@@ -125,7 +125,7 @@ class ApexSanta:
 
 
     def generate_config(self):
-        config = 'var santa_config = {{ region: "{}", bucket: "{}" }};'.format(self.AWS_REGION, self.get_s3_bucket_name())
+        config = 'var santa_config = {{ region: "{}", bucket: "{}", deploy_id: "{}" }};'.format(self.AWS_REGION, self.get_s3_bucket_name(), int(time.time()))
         with open(os.path.join(self.SITE_DIR, "config.js"), "w") as f:
             f.write(config)
 
