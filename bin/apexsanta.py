@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+import re
 import time
 import boto3
 import botocore
@@ -125,9 +126,18 @@ class ApexSanta:
 
 
     def generate_config(self):
-        config = 'var santa_config = {{ region: "{}", bucket: "{}", deploy_id: "{}" }};'.format(self.AWS_REGION, self.get_s3_bucket_name(), int(time.time()))
+        # Deploy ID for cache busting
+        deploy_id = int(time.time())
+        config = 'var santa_config = {{ region: "{}", bucket: "{}", deploy_id: "{}" }};'.format(self.AWS_REGION, self.get_s3_bucket_name(), deploy_id)
         with open(os.path.join(self.SITE_DIR, "config.js"), "w") as f:
             f.write(config)
+
+        # Update the deploy ID query param in index.html to force javascript reloads
+        with open("site/index.html") as f:
+            index_html = f.read()
+        updated_index_html = re.sub(r'([&?]deploy_id)=[0-9]+', r'\1={}'.format(deploy_id), index_html)
+        with open("site/index.html", "w") as f:
+            f.write(updated_index_html)
 
 
     def upload_site(self):

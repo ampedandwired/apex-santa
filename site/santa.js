@@ -217,7 +217,7 @@ var santa = (function($) {
   // Also serves as a general init method for the app.
   var initMap = function() {
     // Add deploy_id query param to force maps refresh after deploy
-    var kmlUrl = "http://www.google.com/maps/d/kml?mid=" + data.currentEvent.id + "&santa_id" + santa_config.deploy_id;
+    var kmlUrl = "https://www.google.com/maps/d/kml?mid=" + data.currentEvent.id + "&santa_id" + santa_config.deploy_id;
     var map = map = new google.maps.Map(document.getElementById('map'));
     data.map = map;
     data.santaMarker = new google.maps.Marker({
