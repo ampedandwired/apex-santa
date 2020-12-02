@@ -62,6 +62,10 @@ hr {
   background-color: #700;
 }
 
+.nav-pills .event-date {
+  font-size: 0.6em;
+}
+
 .nav-pills > li:hover > a, .nav-pills > li:focus > a {
   background-color: #af0000;
   color: #FFF;
