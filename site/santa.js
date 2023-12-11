@@ -111,7 +111,7 @@ var santa = (function($) {
     if (eventStarted && !santaSeenSinceEventStarted) {
       status = "Santa is harnessing up his reindeer and will be here soon!";
     } else if (eventStarted && santaSeenSinceEventStarted && !santaSeenRecently) {
-      status = "Santa is on his way back to the North Pole. See you next year!";
+      status = "Santa has finished for the day, see you next time!";
     } else if (eventNearlyStarted && santaSeenRecently) {
       status = "Santa is in town! You can find him on the map below.";
     } else {

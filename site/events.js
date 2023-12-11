@@ -1,50 +1,26 @@
 var santa_events = [
   {
-    id: "1cty0noBpUQ4NyQHnRKywFdJ6EJ3BD42Y",
-    title: "Barnetts",
-    start_time: "2020-12-04T17:30:00+11:00",
-    start_date_nice: "Friday 4th December",
-    start_time_nice: "5:30pm",
-    description: "Berkley, Clinton, Barnetts, Wyanna, Easton, Jolah, Holliday, Arcadia, finishing at Crossroads Reserve. Christmas trees will be on sale at Crossroads Reserve, and again on Saturday morning."
+    id: "1XHsOpkQoQW5SqNT4gTS3Vp07NNQ",
+    title: "Berowra Heights North",
+    start_time: "2023-12-08T17:30:00+11:00",
+    start_date_nice: "Friday 8th December",
+    start_time_nice: "Run starts at 5:00pm",
+    description: "Turner, Wideview, Lonsdale, Woodcourt, Alan, Hillcrest, finishing at Warrina St Oval where you can meet Santa. Christmas trees will be on sale at the oval, and again on Saturday morning."
   },
   {
-    id: "1AYqEFdwjilsrRo_23cHTZoTAg3L6cjsl",
-    title: "Warrina",
-    start_time: "2020-12-07T17:00:00+11:00",
-    start_date_nice: "Monday 7th December",
-    start_time_nice: "5pm",
-    description: "Warrina, Koloona, Balaclava, Rosslyn, Koorong"
+    id: "1YXjL3Pq3gA-LM9hFb_tDLKYjyzgKefI",
+    title: "Berowra Heights South",
+    start_time: "2023-12-14T17:00:00+11:00",
+    start_date_nice: "Thursday 14th December",
+    start_time_nice: "Run starts at 5:00pm",
+    description: "Barnetts, Berkley, Wyanna, Jolah, Holliday, Balaclava, Koloona"
   },
   {
-    id: "1ntf_c5oCezAC7odmshNx0cXBNiG6uRpb",
-    title: "Yallambee",
-    start_time: "2020-12-11T17:00:00+11:00",
-    start_date_nice: "Friday 11th December",
-    start_time_nice: "5pm",
-    description: "Crowley, Cumbora, Waratah, Anembo, Yallambee, Kywong, Redwood, Bambil, Greenview"
-  },
-  {
-    id: "1ANAszTd121BrgJlT5rfN8QsL6MF6YLPz",
-    title: "Wideview",
-    start_time: "2020-12-16T17:00:00+11:00",
-    start_date_nice: "Wednesday 16th December",
-    start_time_nice: "5pm",
-    description: "Turner, Cambewarra, Elizabeth, Lingellen, Alan, Warruga, Wideview, Evelyn, Lonsdale, Woodcourt"
-  },
-  {
-    id: "1wpCmz6-GP4q6Aqy6qeybH4fqLEuTfBNX",
-    title: "Gully Rd",
-    start_time: "2020-12-18T17:00:00+11:00",
-    start_date_nice: "Friday 18th December",
-    start_time_nice: "5pm",
-    description: "Berowra Waters Rd, Gully, Willunga, Richards, Mary Wall, Glencoe"
-  },
-  {
-    id: "1T6vwkyT5aW6d8kqj1TSTLFpyTAASlLix",
-    title: "Mystery Run",
-    start_time: "2020-12-22T17:00:00+11:00",
-    start_date_nice: "Tuesday 22nd December",
-    start_time_nice: "5pm",
-    description: "Santa will be out and about around Berowra somewhere, keep your eye out for him!"
+    id: "1iIDFz8Tphh-xXaHMVMLGfv4QTA0",
+    title: "Berowra Oval",
+    start_time: "2023-12-22T17:00:00+11:00",
+    start_date_nice: "Friday 22nd December",
+    start_time_nice: "Santa run and BBQ starts 5pm, Santa on oval about 6pm",
+    description: "Crowley, Yallambee, Kywong, Gully. Free BBQ and festivities on Berowra Oval with Santa after!"
   }
 ];
