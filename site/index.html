@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css?family=Merienda+One" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Merienda" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link rel="stylesheet" href="santa.css?deploy_id=1702259542">
+    <link rel="stylesheet" href="santa.css?deploy_id=1761805166">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -27,7 +27,7 @@
   <body>
     <div id="santa" class="container-fluid" v-cloak>
       <div v-if="currentEvent" id="header" class="row">
-        <h1 class="text-center">Santa is Coming to Berowra!<img src="assets/santa_sleigh.png?deploy_id=1702259542" alt="Santa sleigh" height="75"></h1>
+        <h1 class="text-center">Santa is Coming to Berowra!<img src="assets/santa_sleigh.png?deploy_id=1761805166" alt="Santa sleigh" height="75"></h1>
       </div>
       <div v-if="!currentEvent" id="header" class="row">
         <h1 class="text-center">See You Next Christmas!</h1>
@@ -37,7 +37,7 @@
           <div id="lead">
             <p class="lead">
               Santa is making a special trip through the streets of Berowra this Christmas. View his route and track him live right here.
-              When Santa is on his way, you will see a sleigh icon on the map showing his current location. <img src="assets/santa_marker.png?deploy_id=1702259542">
+              When Santa is on his way, you will see a sleigh icon on the map showing his current location. <img src="assets/santa_marker.png?deploy_id=1761805166">
             </p>
           </div>
           <div id="events" class="row">
@@ -64,7 +64,10 @@
                   {{ error }}
                 </div>
                 <div v-if="lastSantaLocationUpdate">
-                  <p>Last update: {{ lastSantaLocationUpdate }}</p>
+                  <p>Santa's last recorded position: {{ lastSantaLocationUpdate }}</p>
+                </div>
+                <div v-if="lastSantaLocationRefresh">
+                  <p>Santa's last fetched position: {{ lastSantaLocationRefresh }}</p>
                 </div>
               </template>
               <div id="map"></div>
@@ -73,7 +76,7 @@
           <footer class="row">
             <p>Brought to you by the <a href="https://berowraapex.org.au">Berowra Apex Club</a></p>
             <a href="http://berowraapex.org.au">
-              <img src="assets/apex_logo.png?deploy_id=1702259542" title="Brought to you by Berowra Apex Club" alt="logo" width="200" height="155" />
+              <img src="assets/apex_logo.png?deploy_id=1761805166" title="Brought to you by Berowra Apex Club" alt="logo" width="200" height="155" />
             </a>
           </footer>
         </div>
@@ -89,7 +92,7 @@
             <footer class="row">
               <p>Love Berowra? Why not join the <a href="https://berowraapex.org.au/about/">Berowra Apex Club</a>, have some fun and help the community?</p>
               <a href="https://berowraapex.org.au/">
-                <img src="assets/apex_logo.png?deploy_id=1702259542" title="Brought to you by Berowra Apex Club" alt="logo" width="200" height="155" />
+                <img src="assets/apex_logo.png?deploy_id=1761805166" title="Brought to you by Berowra Apex Club" alt="logo" width="200" height="155" />
               </a>
             </footer>
           </div>
@@ -101,9 +104,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js" crossorigin="anonymous"></script>
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.166.0.min.js"></script>
-    <script src="config.js?deploy_id=1702259542"></script>
-    <script src="events.js?deploy_id=1702259542"></script>
-    <script src="santa.js?deploy_id=1702259542"></script>
+    <script src="config.js?deploy_id=1761805166"></script>
+    <script src="events.js?deploy_id=1761805166"></script>
+    <script src="santa.js?deploy_id=1761805166"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbcrgUkf35Tw6h06HwGpVUQCabNbLZr1c&callback=santa.initMap"></script>
 
     <script>
