@@ -138,6 +138,8 @@ var santa = (function($) {
         }
 
         log("refreshSantaLocation: " + data.currentEvent.id + ": " + JSON.stringify(loc));
+        var now = new Date().getTime();
+        data.lastSantaLocationRefresh = "lat " + loc.lat + ", lng " + loc.lng + ", asAtTime " + new Date(loc.time).toISOString() + ", timeNow " + new Date(now).toISOString() + ", driftSecs " + (now-loc.time)/1000;
         var lastSantaUpdateTime = loc.time;
         var currentTime = new Date().getTime();
         var timeSinceSantaSeen = currentTime - lastSantaUpdateTime;
@@ -178,7 +180,7 @@ var santa = (function($) {
           var locString = JSON.stringify(loc);
           var url = "live/" + eventId + ".json";
           log("setSantaLocation: Update santa location " + eventId + ": " + locString);
-          data.lastSantaLocationUpdate = "lat " + position.coords.latitude + ", lng " + position.coords.longitude + ", time " + now.toLocaleTimeString();
+          data.lastSantaLocationUpdate = "lat " + loc.lat + ", lng " + loc.lng + ", accuracyMetres " + position.coords.accuracy + ", gpsLastRefreshSecs " + (now-position.timestamp)/1000 + ", time " + new Date(loc.time).toISOString();
           if (IS_LOCAL) {
             // App is running locally - post the location to localhost
             $.ajax(url, {
@@ -207,7 +209,7 @@ var santa = (function($) {
         }
       }, function(err) {
         data.error = err.message;
-      });
+      }, null, REFRESH_SECONDS*1000);
     } else {
       data.error = "Unable to determine your current location";
     }
@@ -248,12 +250,16 @@ var santa = (function($) {
       suppressInfoWindows: true,
     });
 
-    // Recurring loop to refresh Santa's and the current user's location
-    (function updateSanta(){
+//    // Recurring loop to refresh Santa's and the current user's location
+//    (function updateSanta(){
+//      _refreshCurrentLocation();
+//      _refreshSantaLocation();
+//      setTimeout(updateSanta, REFRESH_SECONDS * 1000);
+//    })();
+    var userLocationInterval = setInterval(function() {
       _refreshCurrentLocation();
       _refreshSantaLocation();
-      setTimeout(updateSanta, REFRESH_SECONDS * 1000);
-    })();
+    }, REFRESH_SECONDS * 1000);
   };
 
   // Sets the "current" event in response to a user clicking a button
@@ -262,23 +268,40 @@ var santa = (function($) {
     if (newEvent.id !== data.currentEvent.id) {
       data.tracking = false;
       data.lastSantaLocationUpdate = null;
+      data.lastSantaLocationRefresh = null;
       data.currentEvent = newEvent;
       initMap();
     }
   };
 
   // Starts tracking Santa - called only on Santa's device
-  var startTracking = function() {
+//  var startTracking = function() {
+//    if (!data.tracking) {
+//      data.tracking = true;
+//
+//      // Recurring loop to update Santa's current location on the server
+//      (function updateTracking() {
+//        if (data.tracking) {
+//          _setSantaLocation();
+//          setTimeout(updateTracking, REFRESH_SECONDS * 1000);
+//        }
+//      })();
+//    }
+//  };
+
+var startTracking = function() {
     if (!data.tracking) {
       data.tracking = true;
 
-      // Recurring loop to update Santa's current location on the server
-      (function updateTracking() {
+      // Use setInterval for recurring location updates
+      var santaTrackingInterval = setInterval(function() {
         if (data.tracking) {
           _setSantaLocation();
-          setTimeout(updateTracking, REFRESH_SECONDS * 1000);
+        } else {
+          // Clear the interval if tracking is stopped
+          clearInterval(santaTrackingInterval);
         }
-      })();
+      }, REFRESH_SECONDS * 1000);
     }
   };
 
@@ -295,7 +318,8 @@ var santa = (function($) {
     tracking: false,
     status: null,
     error: null,
-    lastSantaLocationUpdate: null
+    lastSantaLocationUpdate: null,
+    lastSantaLocationRefresh: null
   };
 
   // The Vue instance
