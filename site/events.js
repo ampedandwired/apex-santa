@@ -12,7 +12,7 @@ var santa_events = [
       title: "Berowra Heights South",
       start_time: "2025-12-11T17:00:00+11:00",
       start_date_nice: "Thursday 11th December",
-      start_time_nice: "Run starts at 5:00pm",
+      start_time_nice: "run starts at 5:00pm",
       description: "Barnetts, Berkley, Wyanna, Jolah, Holliday, Balaclava, Koloona"
     },
     {
